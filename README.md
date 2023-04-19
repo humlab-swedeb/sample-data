@@ -1,4 +1,4 @@
-# This repository contains sample data user fopr Swe-Deb Q&A
+# SweDeb Sample Data
 
 This repository contains sample datasets used for Swe-DEB testing and quality control.
 
