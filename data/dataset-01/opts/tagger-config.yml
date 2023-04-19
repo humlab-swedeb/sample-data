@@ -1,0 +1,12 @@
+root_folder: .
+dehyphen_folder: ./dehyphen_datadir
+tagger_module: pyriksprot_tagger.taggers.stanza
+tagger_opts:
+  stanza_datadir: null
+  preprocessors: "dedent,dehyphen,strip,pretokenize"
+  lang: "sv"
+  processors: "tokenize,lemma,pos"
+  tokenize_pretokenized: true
+  tokenize_no_ssplit: true
+  use_gpu: true
+  num_threads: 1

@@ -1,0 +1,10 @@
+prot-1960--ak--1.xml
+prot-1960-höst-ak--22.xml
+prot-1961--ak--1.xml
+prot-1961--fk--1.xml
+prot-1970-höst-fk--45.xml
+prot-1970-höst-fk--46.xml
+prot-1971--1.xml
+prot-1971--2.xml
+prot-198081--1.xml
+prot-198081--2.xml
