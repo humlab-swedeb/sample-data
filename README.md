@@ -49,18 +49,7 @@ Each dataset is structured as follows:
     │   │   ├── ...  * generated data
     │   │   ├── alias.csv
     │   │   ├── government.csv
-    │   │   ├── location_specifier.csv
-    │   │   ├── member_of_parliament.csv
-    │   │   ├── minister.csv
-    │   │   ├── name.csv
-    │   │   ├── name_location_specifier.csv
-    │   │   ├── party_abbreviation.csv
-    │   │   ├── party_affiliation.csv
-    │   │   ├── person.csv
-    │   │   ├── protocols.csv*
-    │   │   ├── speaker.csv
-    │   │   ├── speaker_notes.csv*
-    │   │   ├── twitter.csv
+    │   │   ├── ...
     │   │   ├── unknowns.csv
     │   │   ├── utterances.csv
     │   │   └── * is generated data
@@ -90,11 +79,7 @@ You first need to install the following python libraries
 
 0. Clone this repository and install required libraries.
 
-1. Create a new data folder these and copy these folders/files from (the root of) an existing dataset as a starting-point:
- - opts
- - .env
- - Makefile
- - protocols.txt
+1. Create a new data folder these and copy folder `opts` and files `.env`, `Makefile` and `protocols.txt` from (the root of) an existing dataset as a starting-point.
 
 ```
 % mkdir data/dataset-xy
