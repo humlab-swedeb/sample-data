@@ -2,8 +2,9 @@ include .env
 
 SHELL := /bin/bash
 
-SWEDEB_TAG=v0.6.0
 DATA_FOLDER=.
+
+dataset: parlaclarin-corpus word-frequencies tag-protocols tagged-speech-corpora text-corpora dtm-corpora
 
 parlaclarin-corpus:
 	@echo "Target(s): 1) subset of Parla-CLARIN corpus 2) processed metadata"
@@ -47,19 +48,6 @@ text-corpora: ./opts/plain-text-speeches/*.yml
 					$(SWEDEB_TAG)/speeches/$$(basename $${file%.yml}).zip ; \
     done
 
-.ONESHELL: env-test
-env-test:
-	@if [[ "$(shell which python)" == "$(shell poetry run which python)" ]]; then
-		echo "global: $(shell which python)"
-		echo " local: $(shell poetry run which python)"
-		exit ;
-		echo "global: $(shell which python)"
-		echo " local: $(shell poetry run which python)"
-	fi
-
-
-# @if [ "$(which python)" == "$(poetry run which python)" ]; then echo "HEJ"; fi
-
 PENELOPE_FOLDER=/home/roger/source/penelope
 dtm-corpora: ./opts/dtm/*.yml
 	@echo "Target(s): DTM corpora"
@@ -80,18 +68,3 @@ dtm-corpora: ./opts/dtm/*.yml
 
 clean:
 	@rm -rf $(SWEDEB_TAG)
-
-extract-swedeb-speeches-to-feather:
-	@echo $(DATA_FOLDER)/riksprot_metadata.db
-	@riksprot2speech \
-		--compress-type feather \
-		--merge-strategy chain \
-	 	--target-type single-id-tagged-frame-per-group \
-		--skip-text \
-		--lowercase \
-		--skip-puncts \
-		--force \
-		 	$(SWEDEB_TAG)/tagged_frames \
-			 	$(SWEDEB_TAG)/riksprot_metadata.db \
-				$(SWEDEB_TAG)/tagged_frames_speeches.feather
-
