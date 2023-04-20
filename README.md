@@ -4,6 +4,8 @@ This repository contains sample datasets used for Swe-DEB testing and quality co
 
 ## Description
 
+![Dataset generation](docs/swedeb-sample-data.svg)
+
 Each dataset is structured as follows:
 
 ```
