@@ -18,6 +18,8 @@ license = "Apache-2.0"
 [tool.poetry.dependencies]
 python = ">=3.11.0,<3.12.0"
 pyriksprot-tagger = {path = "../../welfare-state-analytics/pyriksprot_tagger", develop = true}
+pyriksprot = "^2023.4.4"
+cwb-ccc = "^0.11.8"
 
 
 [build-system]
