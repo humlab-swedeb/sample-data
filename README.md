@@ -63,7 +63,13 @@ Each dataset is structured as follows:
     │   ├── text_speeches_base.zip
     │   └── text_speeches_dedent_dehyphen.zip
     └── tagged_frames
-        └── ... tagged version of ParlaCLARIN protocols
+    │   └── ... tagged version of ParlaCLARIN protocols
+    └── vrt
+    │   └── ... vertical text version of tagged frames (with structural tags)
+    └── cwb
+        └── ... Corpus Workbench data folder
+    └── registry
+        └── ... Corpus Workbench registry (update folder paths!)
 
 ```
 
@@ -277,3 +283,7 @@ Options:
   --to-lower / --no-to-lower      Lowercase words
   --help                          Show this message and exit.
 ```
+
+### Generate VRT corpus (input to CWB)
+
+
