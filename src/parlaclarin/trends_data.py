@@ -56,6 +56,7 @@ class SweDebTrendsData(wt.TrendsData):
     def update_document_index(
         self, opts: SweDebComputeOpts, document_index: pd.DataFrame
     ) -> pd.DataFrame:
+        """Decodes ID columns (keeps ID) and updates document index with filename, time_period and document_name."""
         if not opts.pivot_keys_id_names:
             return document_index
         di: pd.DataFrame = self.person_codecs.decode(document_index, drop=False)

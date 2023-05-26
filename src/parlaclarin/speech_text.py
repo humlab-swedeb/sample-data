@@ -278,7 +278,7 @@ class SpeechTextRepository:
     def get_github_tags(self, github_access_token: str = None) -> list[str]:
         release_tags: list[str] = ["main", "dev"]
         try:
-
+            
             access_token: str = github_access_token or os.environ.get("GITHUB_ACCESS_TOKEN", None)
 
             # if access_token is None:
