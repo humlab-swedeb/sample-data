@@ -242,7 +242,7 @@ class SpeechTextRepository:
         try:
             speech['parlaclarin_links'] = self.to_parla_clarin_urls(speech["protocol_name"])
             speech['wikidata_link'] = self.to_wikidata_link(speech["who"])
-            speech['kb_labb_link'] = self.to_kb_labb_link(speech["protocol_name"], speech["page_number"])
+            speech['kb_labb_link'] = self.to_pdf_link(speech["protocol_name"], speech["page"])
             return self.template.render(speech)
         except Exception as ex:
             return f"render failed: {ex}"
@@ -262,16 +262,19 @@ class SpeechTextRepository:
         img_src = f'<img width={width} heigh={height} src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikidata-logo.svg"/>'
         return f'<a href="https://www.wikidata.org/wiki/{who}" target="_blank" style="font-weight: bold;color: blue;">{img_src}</a>&nbsp;'
 
-    def to_kb_labb_link(self, protocol_name: str, page_number: str) -> str:
+    def to_pdf_link(self, protocol_name: str, page: str) -> str:
 
-        if not bool(protocol_name):
-            return ""
+        if page.startswith("http"):
+            url: str = page
+        else:
+            if not bool(protocol_name):
+                return ""
 
-        page_url: str = (
-            f"{protocol_name.replace('-', '_')}-{str(page_number).zfill(3)}.jp2/" if page_number.isnumeric() else ""
-        )
+            page_url: str = (
+                f"{protocol_name.replace('-', '_')}-{str(page).zfill(3)}.jp2/" if page.isnumeric() else ""
+            )
 
-        url: str = f"https://betalab.kb.se/{protocol_name}/{page_url}_view"
+            url: str = f"https://betalab.kb.se/{protocol_name}/{page_url}_view"
 
         return f'<a href="{url}" target="_blank" style="font-weight: bold;color: blue;">KB</a>&nbsp;'
 
