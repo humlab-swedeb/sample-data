@@ -30,7 +30,7 @@ class SweDebComputeOpts(wt.TrendsComputeOpts):
         return obj
 
 
-class SweDebTrendsData(wt.TrendsData):
+class SweDebTrendsData(wt.TrendsService):
     def __init__(
         self,
         corpus: pc.VectorizedCorpus,
@@ -69,3 +69,4 @@ class SweDebTrendsData(wt.TrendsData):
         di["filename"] = di.document_name
         di["time_period"] = di[opts.temporal_key]
         return di
+
