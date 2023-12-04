@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "swedeb-sample-data"
-version = "0.1.0"
+version = "2023.12.1"
 description = "Sample test data for Swe-DEB"
 authors = ["roger-mahler <roger.mahler@hotmail.com>"]
 readme = "README.md"
@@ -16,18 +16,27 @@ classifiers = [
 license = "Apache-2.0"
 
 [tool.poetry.dependencies]
-python = "==3.11.3"
+python = "==3.11.*"
 # pyriksprot-tagger = {path = "../../welfare-state-analytics/pyriksprot_tagger", develop = true}
-pyriksprot = "^2023.4.4"
-# cwb-ccc = "*"
+pyriksprot = "^2023.4.7"
+cwb-ccc = "*"
 humlab-penelope = "^0.7.22"
 jupyterlab = "^4.0.0"
 ipykernel = "^6.23.1"
 jupyter = "^1.0.0"
+pyriksprot-tagger = "^2023.4.4"
 
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.17.5"
+pytest = "^7.4.0"
+black = "^23.7.0"
 
 [tool.black]
 line-length = 120
+skip_string_normalization = true
+target-version = ["py39"]
+skip-string-normalization = true
 
 [tool.pylint.format]
 max-line-length = 120
@@ -53,5 +62,5 @@ ignore-paths = ["data/"]
 
 
 [build-system]
-requires = ["setuptools", "poetry-core>=1.0.0"]
+requires = ["setuptools", "poetry-core>=1.1.0"]
 build-backend = "poetry.core.masonry.api"
