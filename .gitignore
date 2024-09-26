@@ -146,9 +146,8 @@ export
 
 *.out
 output
-deprecated
-work_dir
-.profile-reports
 logs
 purgatory
-data/decade-*
+data/*/v*
+data/*/logs
+tmp
