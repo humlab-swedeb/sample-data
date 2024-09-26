@@ -18,14 +18,14 @@ license = "Apache-2.0"
 [tool.poetry.dependencies]
 python = "==3.11.*"
 # pyriksprot-tagger = {path = "../../welfare-state-analytics/pyriksprot_tagger", develop = true}
-pyriksprot = "^2023.4.7"
-cwb-ccc = "*"
-humlab-penelope = "^0.7.22"
+pyriksprot = "*"
+cwb-ccc = "^0.12.1"
+humlab-penelope = "*"
 jupyterlab = "^4.0.0"
 ipykernel = "^6.23.1"
-jupyter = "^1.0.0"
-pyriksprot-tagger = "^2023.4.4"
-
+jupyter = "*"
+pyriksprot-tagger = "*"
+pandas = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "^2.17.5"
