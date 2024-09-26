@@ -1,0 +1,10 @@
+prot-1960-*.xml
+prot-1961-*.xml
+prot-1962-*.xml
+prot-1963-*.xml
+prot-1964-*.xml
+prot-1965-*.xml
+prot-1966-*.xml
+prot-1967-*.xml
+prot-1968-*.xml
+prot-1969-*.xml
