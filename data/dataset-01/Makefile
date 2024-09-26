@@ -70,6 +70,7 @@ vrt-data:
 		-t protocol -t speech --batch-tag year
 
 CWB_TARGET_FOLDER=`pwd`/$(SWEDEB_TAG)/cwb
+CWB_REGISTRY_FOLDER=`pwd`/$(SWEDEB_TAG)/registry
 CWB_REGISTRY_ENTRY := riksprot_$(subst .,,$(SWEDEB_TAG))_test
 CWB_CORPUS_NAME := $(shell X="${CWB_REGISTRY_ENTRY}"; echo $${X^^})
 
@@ -78,9 +79,10 @@ cwb-make-exists = $(if $(shell which cwb-make 2> /dev/null),true,false)
 .PHONY: cwb-data
 cwb-data:
 	@rm -rf $(CWB_TARGET_FOLDER) && mkdir -p $(CWB_TARGET_FOLDER)
+	@mkdir -p $(CWB_REGISTRY_FOLDER)
 	@cwb-encode -d $(CWB_TARGET_FOLDER) -s -x -B -c utf8 \
 		-F `pwd`/$(SWEDEB_TAG)/vrt \
-		-R /usr/local/share/cwb/registry/$(CWB_REGISTRY_ENTRY) \
+		-R $(CWB_REGISTRY_FOLDER)/$(CWB_REGISTRY_ENTRY) \
 		-P lemma -P pos -P xpos \
 		-S year:0+title+date \
 		-S protocol:0+title+date \
