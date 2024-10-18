@@ -21,11 +21,7 @@ python = "==3.11.*"
 pyriksprot = "*"
 cwb-ccc = "^0.12.1"
 humlab-penelope = "*"
-jupyterlab = "^4.0.0"
-ipykernel = "^6.23.1"
-jupyter = "*"
 pyriksprot-tagger = "*"
-pandas = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "^2.17.5"
