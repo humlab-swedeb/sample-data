@@ -1,0 +1,69 @@
+party	abbreviation	Party_name_filter_SweDeb	Delete		Party_name_filter_SweDeb	sort_order
+"""vänstern"""	FK-v	FK:s vänstern (1886)	Centerpartiet (1922–)	1
+Andra kammarens center	AK-c89	AK:s center (1889–1894)	Kristdemokraterna (1985-)	2
+Andra kammarens frihandelsparti	AK-frip	AK:s frihandelsparti (1887–1888)	Liberalerna (1900–)	3
+Andra kammarens vänster	AK-v	AK:s vänstern (1886)	Miljöpartiet (1988–)	4
+Bondeförbundet	C	Centerpartiet (1922–)	Moderaterna (1935–)	5
+Bondeska diskussionsklubben	AK-bd	AK:s bondeska diskussionsklubben (1897–1899)	Socialdemokraterna (1897–)	6
+Center-högern	AK-ch	AK:s center-högern (1883–1886)	Sverigedemokraterna (2010–)	7
+Centern (partigrupp 1873-1882)	AK-c73	AK:s centern (1873–1882)	Vänsterpartiet (1917–)	8
+Centern (partigrupp 1885-1887)	FK-c	FK:s centern (1885–1887)	AK:s bondeska diskussionsklubben (1897–1899)	9
+Centerpartiet	C	Centerpartiet (1922–)	AK:s center (1889–1894)	10
+De moderata reformvännernas grupp	AK-mfg	AK:s de moderata reformvännernas grupp (1903–1905)	AK:s center-högern (1883–1886)	11
+Det förenade högerpartiet	FK-fh	FK:s det förenade högerpartiet (1910–1911)	AK:s centern (1873–1882)	12
+Ehrenheimska partiet	FK-ep	FK:s ehrenheimska partiet (1873–1887)	AK:s de moderata reformvännernas grupp (1903–1905)	13
+Folkpartiet	L	Liberalerna (1900–)	AK:s folkpartiet (1895–1899)	14
+Folkpartiet (1895–1900)	AK-fp	AK:s folkpartiet (1895–1899)	AK:s friesenska diskussionsklubben (1897–1899)	15
+Friesenska diskussionsklubben	AK-fd	AK:s friesenska diskussionsklubben (1897–1899)	AK:s frihandelsparti (1887–1888)	16
+frihandelsvänlig vilde	[–]	Utan partibeteckning	AK:s frihandelsvänliga centern (1895–1897)	17
+Frihandelsvänliga centern	AK-fc	AK:s frihandelsvänliga centern (1895–1897)	AK:s frisinnade försvarsvänner (1914)	18
+frisinnad vilde	[–]	Utan partibeteckning	AK:s gamla lantmannapartiet (1888–1894)	19
+Frisinnade folkpartiet	L	Liberalerna (1900–)	AK:s lantmanna- och borgarepartiet (1912–1934)	20
+Frisinnade försvarsvänner	AK-ff	AK:s frisinnade försvarsvänner (1914)	AK:s lantmannapartiet (1867–1887, 1895–1911)	21
+Frisinnade landsföreningen	L	Liberalerna (1900–)	AK:s lantmannapartiets filial (1873–1887)	22
+Första kammarens konservativa grupp	FK-kg	FK:s konservativa grupp (1867–1872)	AK:s nationella framstegspartiet (1906–1911)	23
+Första kammarens ministeriella grupp	FK-mg	FK:s ministeriella grupp (1867–1872)	AK:s nationella gruppen (1935–1936)	24
+Första kammarens minoritetsparti	FK-minop	FK:s minoritetsparti (1888–1904)	AK:s nya centern (1883–1887)	25
+Första kammarens moderata parti	FK-modp	FK:s moderata parti (1905–1911)	AK:s nya centern (1895–1896)	26
+Första kammarens nationella parti	FK-np	FK:s nationella parti (1912–1934)	AK:s nya lantmannapartiet (1888–1894)	27
+Första kammarens protektionistiska parti	FK-pp	FK:s protektionistiska parti (1888–1909)	AK:s nyliberala partiet (1868–1871)	28
+Gamla lantmannapartiet	AK-glmp	AK:s gamla lantmannapartiet (1888–1894)	AK:s vänstern (1886)	29
+Högerns riksdagsgrupp	M	Moderaterna (1935–)	FK:s centern (1885–1887)	30
+Högerpartiet	M	Moderaterna (1935–)	FK:s det förenade högerpartiet (1910–1911)	31
+högervilde	[–]	Utan partibeteckning	FK:s ehrenheimska partiet (1873–1887)	32
+Jordbrukarnas fria grupp	Jfg	Jordbrukarnas fria grupp (1918–1921)	FK:s konservativa grupp (1867–1872)	33
+Kilbomspartiet	Kp	Kilbomspartiet (1930–1933)	FK:s ministeriella grupp (1867–1872)	34
+kommunistisk vilde	[–]	Utan partibeteckning	FK:s ministeriella partiet (1867–1872)	35
+Kommunistiska partiet	V	Vänsterpartiet (1917–)	FK:s minoritetsparti (1888–1904)	36
+Kristdemokraterna	Kd	Kristdemokraterna (1985–)	FK:s moderata parti (1905–1911)	37
+Lantmanna- och borgarepartiet inom andrakammaren	AK-lb	AK:s lantmanna- och borgarepartiet (1912–1934)	FK:s nationella parti (1912–1934)	38
+Lantmannapartiet	AK-lmp	AK:s lantmannapartiet (1867–1887, 1895–1911)	FK:s protektionistiska parti (1888–1909)	39
+Lantmannapartiets filial	AK-lmpf	AK:s lantmannapartiets filial (1873–1887)	FK:s vänstern (1886)	40
+lib vilde	[–]	Utan partibeteckning	Jordbrukarnas fria grupp (1918–1921)	41
+Liberala riksdagspartiet	Lrp	Liberala riksdagspartiet (1924–1934)	Kilbomspartiet (1930–1933)	42
+Liberala samlingspartiet	L	Liberalerna (1900–)	Liberala riksdagspartiet (1924–1934)	43
+Liberalerna	L	Liberalerna (1900–)	Medborgerlig samling (1964–1968)	44
+Medborgerlig samling (1964–1968)	Ms	Medborgerlig samling (1964–1968)	Ny demokrati (1991–1994)	45
+Miljöpartiet	Mp	Miljöpartiet (1988–)	Socialistiska partiet (1934–1940)	46
+ministeriella partiet	FK-minip	FK:s ministeriella partiet (1867–1872)	Utan partibeteckning	47
+moderat vilde	[–]	Utan partibeteckning		
+Moderaterna	M	Moderaterna (1935–)		
+National Organization of the Right	M	Moderaterna (1935–)		
+Nationella framstegspartiet	AK-nf	AK:s nationella framstegspartiet (1906–1911)		
+Ny demokrati	Nyd	Ny demokrati (1991–1994)		
+Nya centern (partigrupp 1883-1887)	AK-nc83	AK:s nya centern (1883–1887)		
+nya centern (partigrupp 1895-1896)	AK-nc95	AK:s nya centern (1895–1896)		
+Nya lantmannapartiet	AK-nlmp	AK:s nya lantmannapartiet (1888–1894)		
+Nyliberala partiet	AK-np	AK:s nyliberala partiet (1868–1871)		
+partilös	[–]	Utan partibeteckning		
+politisk vilde	[–]	Utan partibeteckning		
+Socialdemokraterna	S	Socialdemokraterna (1897–)		
+Socialdemokratiska vänstergruppen	V	Vänsterpartiet (1917–)		
+Socialistiska partiet	Sp	Socialistiska partiet (1934–1940)		
+Sverges kommunistiska parti	V	Vänsterpartiet (1917–)		
+Sverigedemokraterna	Sd	Sverigedemokraterna (2010–)		
+Sveriges kommunistiska parti	V	Vänsterpartiet (1917–)		
+Sveriges nationella förbund	AK-ng	AK:s nationella gruppen (1935-1936)		
+Vänsterpartiet	V	Vänsterpartiet (1917–)		
+vänstersocialistisk vilde	[–]	Utan partibeteckning		
+vänstervilde	[–]	Utan partibeteckning		
