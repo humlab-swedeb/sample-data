@@ -150,4 +150,5 @@ logs
 purgatory
 data/*/v*
 data/*/logs
+data/*/archived
 tmp
