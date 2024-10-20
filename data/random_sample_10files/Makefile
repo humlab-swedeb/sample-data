@@ -178,6 +178,13 @@ vrt-data:
 		--structural-tag speech \
 		--batch-tag year
 
+copy-swedeb-global:
+	@echo "info: copying global data..."
+	@echo "info:    source: $(SWEDEB_TAG)"
+	@echo "info:    target: /data/swedeb/$(SWEDEB_TAG)"
+	@rm -rf /data/swedeb/random_sample_10files
+	@cp -r ../random_sample_10files /data/swedeb/random_sample_10files
+
 
 ifndef CWB_REGISTRY_ENTRY
 # use the project name to create a CWB registry entry name (lowercase)
@@ -236,7 +243,3 @@ cwb-data-manual-compress:
 	@cwb-makeall -V $(CWB_CORPUS_NAME);
 	@echo rm $(cwb-huffcode -A $(CWB_CORPUS_NAME) | grep "You can delete" | cut -d '<' -f2 | cut -d '>' -f1)
 	@echo rm $(cwb-compress-rdx -A $(CWB_CORPUS_NAME) | grep "You can delete" | cut -d '<' -f2 | cut -d '>' -f1)
-
-install-to-global:
-	@rm -rf /data/swedeb/random_sample_10files
-	@cp -r ../random_sample_10files /data/swedeb/random_sample_10files

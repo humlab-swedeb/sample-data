@@ -70,11 +70,21 @@ metadata:
 		metadata2db  database  \
 			--target-filename=$(SWEDEB_TAG)/riksprot_metadata.db \
 			--force \
-			--source-folder=$(SWEDEB_TAG)/parlaclarin/metadata  opts/subset-config.yml ; \
+			--source-folder=$(SWEDEB_TAG)/parlaclarin/metadata \
+			 opts/subset-config.yml ; \
 		\
 	elif [ "$(METADATA_MODE)" == "skip" ] ; then \
 	    echo "info: skipping metadata..." ; \
 	fi
+
+metadata-refresh:
+	@echo "info: creating new metadata db using existing data (no download, no index update)"
+	@metadata2db database \
+		--target-filename=$(SWEDEB_TAG)/riksprot_metadata.db \
+		--skip-create-index \
+		--skip-download-metadata \
+		--source-folder=$(SWEDEB_TAG)/parlaclarin/metadata \
+		opts/subset-config.yml 
 
 word-frequencies:
 	@echo "info: generating word frequencies..."
@@ -198,7 +208,7 @@ CWB_REGISTRY_ENTRY := $(subst .,,$(CWB_REGISTRY_ENTRY))
 CWB_REGISTRY_ENTRY := $(subst -,_,$(CWB_REGISTRY_ENTRY))
 endif
 
-CWB_CORPUS_NAME := $(shell X="${CWB_REGISTRY_ENTRY}"; echo $${X^^})make compress
+CWB_CORPUS_NAME := $(shell X="${CWB_REGISTRY_ENTRY}"; echo $${X^^})
 CWB_TARGET_FOLDER=`pwd`/$(SWEDEB_TAG)/cwb
 
 cwb-make-exists = $(if $(shell which cwb-make 2> /dev/null),true,false)
