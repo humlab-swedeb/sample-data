@@ -71,7 +71,7 @@ metadata:
 			--target-filename=$(SWEDEB_TAG)/riksprot_metadata.db \
 			--force \
 			--source-folder=$(SWEDEB_TAG)/parlaclarin/metadata \
-			 opts/subset-config.yml ; \
+			opts/subset-config.yml ; \
 		\
 	elif [ "$(METADATA_MODE)" == "skip" ] ; then \
 	    echo "info: skipping metadata..." ; \
