@@ -70,11 +70,21 @@ metadata:
 		metadata2db  database  \
 			--target-filename=$(SWEDEB_TAG)/riksprot_metadata.db \
 			--force \
-			--source-folder=$(SWEDEB_TAG)/parlaclarin/metadata  opts/subset-config.yml ; \
+			--source-folder=$(SWEDEB_TAG)/parlaclarin/metadata \
+			opts/subset-config.yml ; \
 		\
 	elif [ "$(METADATA_MODE)" == "skip" ] ; then \
 	    echo "info: skipping metadata..." ; \
 	fi
+
+metadata-refresh:
+	@echo "info: creating new metadata db using existing data (no download, no index update)"
+	@metadata2db database \
+		--target-filename=$(SWEDEB_TAG)/riksprot_metadata.db \
+		--skip-create-index \
+		--skip-download-metadata \
+		--source-folder=$(SWEDEB_TAG)/parlaclarin/metadata \
+		opts/subset-config.yml 
 
 word-frequencies:
 	@echo "info: generating word frequencies..."
