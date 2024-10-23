@@ -24,7 +24,10 @@ endif
 
 all: dataset vrt-data cwb-data cwb-data-manual-compress
 
-dataset: parlaclarin-corpus metadata word-frequencies tag-protocols tagged-speech-corpora text-corpora dtm-corpora
+.PHONY: dataset dataset-temp parlaclarin-corpus metadata speech-index word-frequencies tag-protocols tagged-speech-corpora text-corpora
+.PHONY: dtm-corpora vrt-data copy-swedeb-global cwb-data cwb-data-manual-compress
+
+dataset: parlaclarin-corpus metadata speech-index word-frequencies tag-protocols tagged-speech-corpora text-corpora dtm-corpora
 
 dataset-temp: word-frequencies tagged-speech-corpora text-corpora dtm-corpora
 
@@ -76,6 +79,16 @@ metadata:
 	elif [ "$(METADATA_MODE)" == "skip" ] ; then \
 	    echo "info: skipping metadata..." ; \
 	fi
+
+speech-index:
+	@echo "info: creating default speech index..."
+	@echo "info:    script: pyriksprot.scripts.riksprot2speech_index:main"
+	@echo "info:    source: $(SWEDEB_TAG)/tagged_frames"
+	@echo "info:    target: $(SWEDEB_TAG)/speech-index.csv.gz (and .feather)"
+	@speech-index $(SWEDEB_TAG)/tagged_frames \
+		$(SWEDEB_TAG)/speech-index.csv.gz \
+		$(SWEDEB_TAG)/riksprot_metadata.db \
+		--multiproc-processes 4
 
 metadata-refresh:
 	@echo "info: creating new metadata db using existing data (no download, no index update)"
@@ -159,12 +172,13 @@ dtm-corpora: ./opts/dtm/*.yml
 	@echo "info: generating DTM corpora..."
 	@echo "note: humlab-penelope (vectorize-id) must be installed in current environment"
 	@echo "info:    script: penelope.vectorize-id"
-	@echo "info:    source: $(SWEDEB_TAG)/speeches/tagged_frames_speeches_$${tag}.feather"
-	@rm -rf $(SWEDEB_TAG)/dtm && mkdir -p $(SWEDEB_TAG)/dtm
+	@mkdir -p $(SWEDEB_TAG)/dtm
 	@for file in $^ ; do \
 	 	tag=$$(basename $${file%.yml}) ; \
+		echo "info:    source: $(SWEDEB_TAG)/speeches/tagged_frames_speeches_$${tag}.feather" \
 		echo "info:    target: $(SWEDEB_TAG)/dtm/$${tag}" ; \
 		echo "info:   options: $${file}" ; \
+		rm -rf $(SWEDEB_TAG)/dtm/$${tag} ; \
 		vectorize-id \
 		    --create-subfolder \
 			--options-filename $${file} \
