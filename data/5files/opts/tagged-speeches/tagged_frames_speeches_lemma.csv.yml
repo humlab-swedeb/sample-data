@@ -1,0 +1,11 @@
+compress_type: gzip
+content_type: tagged_frame
+force: true
+lowercase: true
+merge_strategy: chain
+multiproc_processes: null
+skip_lemma: false
+skip_puncts: true
+skip_stopwords: false
+skip_text: true
+target_type: single-id-tagged-frame-per-group
