@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+g_source_folder=
+g_target_folder=
+g_input_file="./protocols.txt"
+g_config_filename=
+
+function usage() {
+    if [[ $# -gt 0 ]]; then
+        echo "error: $1" >&2
+    fi
+    echo "usage: $0 --source-folder <source_folder> --target-folder <target_folder> --config-filename <config.yml> [--input-file <input_file>]"
+    echo "  -c, --config-filename Config filenam"
+    echo "  -s, --source-folder   Source folder containing the protocol files"
+    echo "  -o, --target-folder   Target folder to copy the protocol files to"
+    echo "  -i, --protocols       Input file containing the list of protocols (default: ./protocols.txt)"
+    exit 1
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --config-filename|-c)
+      g_config_filename="$2"
+      shift 2
+      ;;
+    --source-folder|-s)
+      g_source_folder="$2"
+      shift 2
+      ;;
+      --target-folder|-o)
+      g_target_folder="$2"
+      shift 2
+      ;;
+    --protocols|-p|--input-file|-i)
+      g_input_file="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [ -f "$g_config_filename" ]; then
+  if [ "$g_source_folder" == "" ]; then
+     g_source_folder=$(yq '.global.corpus.folder' "$g_config_filename")
+  fi
+  if [ "$g_target_folder" == "" ]; then
+     g_target_folder=$(yq '.corpus.folder' "$g_config_filename")
+  fi
+fi
+
+if [[ -z "$g_source_folder" || -z "$g_target_folder" ]]; then
+  usage "source and/or target folder not specified"
+fi
+
+if [[ ! -d "$g_source_folder" ]]; then
+  usage "source folder not found"
+fi
+
+if [[ ! -f "$g_input_file" ]]; then
+  usage "input file not found: $g_input_file"
+fi
+
+while IFS= read -r filename; do
+
+    # skip empty lines or comments
+    [[ -z "$filename" ]] && continue
+
+    # skip lines starting with "#"
+    [[ "$filename" =~ ^# ]] && continue
+
+    # extract the digits after "prot-" and before the next "-"
+    # e.g. "prot-1933--fk--5.xml" -> "1933"
+    sub_folder=${filename#prot-}       # remove leading "prot-"
+    sub_folder=${sub_folder%%-*}       # keep everything before the first "-"
+
+    src="$g_source_folder/$sub_folder/$filename"
+    dst_dir="$g_target_folder/$sub_folder"
+
+    rm -rf "$dst_dir"
+    mkdir -p "$dst_dir"
+    cp -f $src "$dst_dir/"   # no double qoutes allows use of wildcards in input file
+
+    echo "info: copied $src → $dst_dir/"
+
+done < "$g_input_file"
+
