@@ -188,7 +188,8 @@ word-frequencies:
 tag-protocols:
 	@echo "info: generating tagged frames (VRT) corpus..."
 	@echo "info:    script: pyriksprot_tagger.scripts.tag:main"
-	@echo "info:    source: $(GLOBAL_FOLDER)/$(CORPUS_VERSION)/tagged_frames"
+	@echo "info:    config: $(CONFIG_FILENAME)"
+	@echo "info:    source: $(CORPUS_VERSION)/riksdagen-records"
 	@echo "info:    target: $(CORPUS_VERSION)/tagged_frames"
 	@echo "info:      mode: $(TAGGING_MODE)"
 	@if [ "$(TAGGING_MODE)" == "skip" ] ; then \
@@ -201,9 +202,9 @@ tag-protocols:
 			$(CORPUS_VERSION)/riksdagen-records $(CORPUS_VERSION)/tagged_frames ; \
 	 elif [ "$(TAGGING_MODE)" == "tag" ] ; then \
 		rm -rf $(CORPUS_VERSION)/tagged_frames ; \
-		pos_tag $(CONFIG_FILENAME) $(CORPUS_VERSION)/riksdagen-records $(CORPUS_VERSION)/tagged_frames ; \
+		pos_tag --skip-version-check $(CONFIG_FILENAME) $(CORPUS_VERSION)/riksdagen-records $(CORPUS_VERSION)/tagged_frames ; \
 	 else \
-		echo "error: uknown tagging mode $(TAGGING_MODE) " ; \
+		echo "error: unknown tagging mode $(TAGGING_MODE) " ; \
 		exit 64 ; \
 	 fi
 
