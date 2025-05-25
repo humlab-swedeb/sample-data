@@ -318,3 +318,55 @@ cwb-data-manual-compress:
 	@cwb-makeall -V $(CWB_CORPUS_NAME);
 	@echo rm $(cwb-huffcode -A $(CWB_CORPUS_NAME) | grep "You can delete" | cut -d '<' -f2 | cut -d '>' -f1)
 	@echo rm $(cwb-compress-rdx -A $(CWB_CORPUS_NAME) | grep "You can delete" | cut -d '<' -f2 | cut -d '>' -f1)
+
+
+# FIXME: VERSION CHECKS
+# METADATA_GIT_FOLDER=$(shell yq '.metadata.github.local_folder' $(CONFIG_FILENAME))
+# CORPUS_FOLDER=$(shell yq '.corpus.folder' $(CONFIG_FILENAME))
+
+# ifeq ($(wildcard $(CORPUS_FOLDER)/.git),)
+# CHECKED_OUT_TAG := $(CORPUS_VERSION)
+# else
+# CHECKED_OUT_TAG=$(shell git -C $(CORPUS_FOLDER) describe --tags)
+# endif
+
+# ifeq ($(wildcard $(METADATA_GIT_FOLDER)/.git),)
+# CHECKED_OUT_METADATA_TAG := $(METADATA_VERSION)
+# else
+# CHECKED_OUT_METADATA_TAG=$(shell git -C $(METADATA_GIT_FOLDER) describe --tags)
+# endif
+
+# ifneq ($(CORPUS_VERSION),$(CHECKED_OUT_TAG))
+# 	$(error repository tag $(CHECKED_OUT_TAG) and .env tag $(CORPUS_VERSION) mismatch)
+# endif
+# ifneq ($(METADATA_VERSION),$(CHECKED_OUT_METADATA_TAG))
+# 	$(error repository tag $(CHECKED_OUT_TAG) and .env tag $(METADATA_VERSION) mismatch)
+# endif
+
+# MOVED FROM PYRIKSPROT/Makefile
+# verify-metadata-filenames:
+# 	@echo "info: checking metadata filenames for $(METADATA_VERSION)"
+# 	@PYTHONPATH=. poetry run python pyriksprot/scripts/metadata2db.py filenames $(CONFIG_FILENAME) $(METADATA_VERSION)
+
+# verify-metadata-columns:
+# 	@PYTHONPATH=. poetry run python pyriksprot/scripts/metadata2db.py columns $(CONFIG_FILENAME) $(METADATA_VERSION)
+
+# .PHONY: metadata-database-vacuum
+# metadata-database-vacuum:
+# 	@sqlite3 metadata/$(METADATA_DATABASE_NAME) "VACUUM;"
+
+# LIGHT_METADATA_DB_NAME=riksprot_metadata.$(METADATA_VERSION).light.db
+
+# .PHONY: metadata-light-database
+# metadata-light-database:
+# 	@cp -f metadata/$(METADATA_DATABASE_NAME) metadata/$(LIGHT_METADATA_DB_NAME)
+# 	@sqlite3 metadata/$(LIGHT_METADATA_DB_NAME) < ./metadata/10_make_light.sql
+# 	@sqlite3 metadata/$(LIGHT_METADATA_DB_NAME) "VACUUM;"
+# 	@cp -f metadata/$(LIGHT_METADATA_DB_NAME) $(shell yq '.root_folder' $(CONFIG_FILENAME))/metadata
+
+# TEST_METADATA=tests/test_data/source/$(CORPUS_VERSION)/riksprot_metadata.db
+
+# .PHONY: metadata-dump-schema
+# metadata-dump-schema:
+# 	@echo -e ".output riksprot_metadata_testdata_$(METADATA_VERSION).sql\n.dump\n.exit" | sqlite3 $(TEST_METADATA)
+# 	@echo -e ".output riksprot_metadata_testdata_schema_$(METADATA_VERSION).sql\n.schema\n.exit" | sqlite3 $(TEST_METADATA)
