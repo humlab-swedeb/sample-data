@@ -98,7 +98,7 @@ You first need to install the following python libraries
  - Each options file added to folder `dataset-xy/opts/dtm` will generate a corresponding DTM.
  The options added to these must be a valid CLI options to `humlab-penelope:vectorize` or `humlab-penelope:vectorize-id` (see help page)
 
-4. Edit `.env` and set `SWEDEB_TAG` to the target ParlaCLARIN version.
+4. Edit `.env` and set `CORPUS_VERSION` and `METADATA_VERSION` to the target ParlaCLARIN version.
 
 5. Use `make` to create the entire dataset, or run any of the individual recipies:
 
