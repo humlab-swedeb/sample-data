@@ -144,11 +144,14 @@ sparv-workdir
 export
 .vscode
 
-*.out
+**/*.out
 output
 logs
 purgatory
-data/*/v*
-data/*/logs
-data/*/archived
+**/v*.*.*
+**/logs
+**/archived
+**/metadata
 tmp
+global-data
+**/*.db
