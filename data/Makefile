@@ -415,11 +415,18 @@ cwb-data:
 		echo "info: cwb-make not found, skipping corpus creation"; \
 		echo "info: run 'sudo cpan install CWB' to install the CWB/Perl toolkit" ; \
 	fi
-	@cwb-describe-corpus $(CWB_CORPUS_NAME)
-	@if [ ! -f "$(CORPUS_VERSION)/registry/$(CWB_REGISTRY_ENTRY)" ] ; then \
-		mkdir -p $(CORPUS_VERSION)/registry ; \
-		cp $(CWB_REGISTRY_FOLDER)/$(CWB_REGISTRY_ENTRY) $(CORPUS_VERSION)/registry/$(CWB_REGISTRY_ENTRY) ; \
-	fi
+	@cwb-describe-corpus -r $(CWB_REGISTRY_FOLDER) $(CWB_CORPUS_NAME)
+	@cp ../resources/riksprot_corpus $(CWB_REGISTRY_FOLDER)/riksprot_corpus
+	@echo "info: CWB corpus $(CWB_CORPUS_NAME) created in $(CWB_TARGET_FOLDER)"
+	@echo "info: Stored registry entry $(CWB_REGISTRY_ENTRY) in $(CWB_REGISTRY_FOLDER)"
+
+generic-cwb-registry-entry:
+	@sed -E -e "s/^(ID[[:space:]]*)$(CWB_REGISTRY_ENTRY)$$/\\1riksprot_corpus/"  \
+			-e "s/$(CWB_REGISTRY_ENTRY)/RIKSPROT_CORPUS/I"  \
+			-e "s/^(HOME[[:space:]]*).*$$/\\1\/data\/cwb/" \
+			-e "s/^(INFO[[:space:]]*).*$$/\\1\/data\/cwb\/.info/" \
+				$(CWB_REGISTRY_FOLDER)/$(CWB_REGISTRY_ENTRY) > $(CWB_REGISTRY_FOLDER)/riksprot_corpus
+
 
 cwb-data-manual-compress:
 	@echo "info: compressing CWB $(CWB_CORPUS_NAME) manually"
