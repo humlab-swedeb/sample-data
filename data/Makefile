@@ -73,9 +73,6 @@ dataset: parlaclarin-corpus metadata speech-index word-frequencies tag-protocols
 config: $(CONFIG_FILENAME)
 	@echo "info: config file $(CONFIG_FILENAME) generated"
 
-apa:
-	@make-config --help
-
 clean:
 	@rm -rf $(CORPUS_VERSION)
 
@@ -396,10 +393,11 @@ cwb-info:
 .PHONY: cwb-data
 cwb-data:
 	@echo "info: generating CWB extended VRT corpora..."
-	@echo "   script: cwb-encode"
-	@echo "   source: $(CORPUS_VERSION)/vrt"
-	@echo "   target: $(CORPUS_VERSION)/cwb"
-	@echo "   CWB name: $(CWB_REGISTRY_ENTRY)"
+	@echo "     script: cwb-encode"
+	@echo "     source: $(CORPUS_VERSION)/vrt"
+	@echo "     target: $(CORPUS_VERSION)/cwb"
+	@echo "   registry: $(CWB_REGISTRY_FOLDER)"
+	@echo "  CWB entry: $(CWB_REGISTRY_ENTRY)"
 	@rm -rf $(CWB_TARGET_FOLDER) && mkdir -p $(CWB_TARGET_FOLDER)
 	@if [ ! -d "$(CWB_REGISTRY_FOLDER)" ] ; then \
 		mkdir -p $(CWB_REGISTRY_FOLDER) ; \
