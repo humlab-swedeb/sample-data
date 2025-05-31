@@ -114,6 +114,11 @@ $(CONFIG_FILENAME): .env
 		--corpus-folder $(CORPUS_FOLDER) \
 		--stanza-datadir /data/sparv/models/stanza $(CONFIG_FILENAME)
 
+####################################################################################################
+# Generate parlaclarin corpus
+####################################################################################################
+
+.PHONY: parlaclarin-corpus reset-corpus-folder
 parlaclarin-corpus: reset-corpus-folder
 	@echo "info: generating parlaclarin & metadata..."
 	@echo "info:    target: $(CORPUS_FOLDER)"
@@ -138,6 +143,11 @@ parlaclarin-corpus: reset-corpus-folder
 		exit 64 ; \
 	fi
 
+####################################################################################################
+# Generate metadata database
+####################################################################################################
+
+.PHONY: metadata
 metadata: reset-metadata-folder $(CONFIG_FILENAME)
 	@echo "info: generating metadata..."
 	@echo "info:    script: pyriksprot.scripts.riksprot2metadata:main"
@@ -168,6 +178,25 @@ metadata: reset-metadata-folder $(CONFIG_FILENAME)
 	    echo "info: skipping metadata..." ; \
 	fi
 
+
+####################################################################################################
+# Refresh metadata database
+####################################################################################################
+
+metadata-refresh:
+	@echo "info: creating new metadata db using existing data (no download, no index update)"
+	@metadata2db database \
+		--target-filename=$(METADATA_FILENAME) \
+		--skip-create-index \
+		--skip-download-metadata \
+		--source-folder=metadata/$(METADATA_VERSION) \
+		$(CONFIG_FILENAME) 
+
+####################################################################################################
+# Generate speech index
+####################################################################################################
+
+.PHONY: speech-index
 speech-index:
 	@echo "info: creating default speech index..."
 	@echo "info:    script: pyriksprot.scripts.riksprot2speech_index:main"
@@ -178,14 +207,9 @@ speech-index:
 		$(METADATA_FILENAME) \
 		--multiproc-processes 4
 
-metadata-refresh:
-	@echo "info: creating new metadata db using existing data (no download, no index update)"
-	@metadata2db database \
-		--target-filename=$(METADATA_FILENAME) \
-		--skip-create-index \
-		--skip-download-metadata \
-		--source-folder=metadata/$(METADATA_VERSION) \
-		$(CONFIG_FILENAME) 
+###################################################################################################
+# Generate word frequencies
+###################################################################################################
 
 word-frequencies:
 	@echo "info: generating word frequencies..."
@@ -205,6 +229,10 @@ word-frequencies:
 		echo "error: unknown WORD_FREQUENCY_MODE $(WORD_FREQUENCY_MODE) " ; \
 		exit 64 ; \
 	fi
+
+###################################################################################################
+# Generate tagged frames (VRT) corpus
+###################################################################################################
 
 tag-protocols:
 	@echo "info: generating tagged frames (VRT) corpus..."
@@ -259,6 +287,10 @@ text-corpora: ./opts/plain-text-speeches/*.yml
 					$(CORPUS_VERSION)/speeches/$$(basename $${file%.yml}).zip ; \
 	done
 
+###################################################################################################
+# Generate DTM corpora
+###################################################################################################
+
 dtm-corpora: ./opts/dtm/*.yml
 	@echo "info: generating DTM corpora..."
 	@echo "note: humlab-penelope (vectorize-id) must be installed in current environment"
@@ -278,6 +310,11 @@ dtm-corpora: ./opts/dtm/*.yml
 			--output-tag $${tag} ; \
 	done
 
+###################################################################################################
+# Generate VRT corpora
+###################################################################################################
+
+.PHONY: vrt-data
 vrt-data:
 	@echo "info: generating CWB extended VRT corpora..."
 	@echo "info:    script: riksprot2vrt"
@@ -302,7 +339,11 @@ cwb-info:
 	@echo "   Entry name: $(CWB_REGISTRY_ENTRY)"
 	@echo "  Corpus name: $(CWB_CORPUS_NAME)"
 	@echo "Target folder: $(CWB_TARGET_FOLDER)"
-	@cwb-describe-corpus $(CWB_CORPUS_NAME)
+	@cwb-describe-corpus  -r $(CWB_REGISTRY_FOLDER) $(CWB_CORPUS_NAME)
+
+#####################################################################################################
+# Generate CWB corpora
+#####################################################################################################
 
 .PHONY: cwb-data
 cwb-data:
