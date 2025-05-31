@@ -413,9 +413,9 @@ cwb-data-manual-compress:
 # verify-metadata-columns:
 # 	@PYTHONPATH=. poetry run python pyriksprot/scripts/metadata2db.py columns $(CONFIG_FILENAME) $(METADATA_VERSION)
 
-# .PHONY: metadata-database-vacuum
-# metadata-database-vacuum:
-# 	@sqlite3 metadata/$(METADATA_DATABASE_NAME) "VACUUM;"
+.PHONY: metadata-database-vacuum
+metadata-database-vacuum:
+	@sqlite3 $(METADATA_FILENAME) "VACUUM;"
 
 # LIGHT_METADATA_DB_NAME=riksprot_metadata.$(METADATA_VERSION).light.db
 
@@ -428,7 +428,8 @@ cwb-data-manual-compress:
 
 # TEST_METADATA=tests/test_data/source/$(CORPUS_VERSION)/riksprot_metadata.db
 
-# .PHONY: metadata-dump-schema
-# metadata-dump-schema:
-# 	@echo -e ".output riksprot_metadata_testdata_$(METADATA_VERSION).sql\n.dump\n.exit" | sqlite3 $(TEST_METADATA)
-# 	@echo -e ".output riksprot_metadata_testdata_schema_$(METADATA_VERSION).sql\n.schema\n.exit" | sqlite3 $(TEST_METADATA)
+.PHONY: metadata-dump-schema
+metadata-dump-schema:
+	@echo -e ".output riksprot_metadata_testdata_$(METADATA_VERSION).sql\n.dump\n.exit" | sqlite3 $(METADATA_FILENAME)
+	@echo -e ".output riksprot_metadata_testdata_schema_$(METADATA_VERSION).sql\n.schema\n.exit" | sqlite3 $(METADATA_FILENAME)
+
