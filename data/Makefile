@@ -68,7 +68,7 @@ info:
 
 all: dataset vrt-data cwb-data cwb-data-manual-compress
 
-dataset: parlaclarin-corpus metadata speech-index word-frequencies tag-protocols tagged-speech-corpora text-corpora dtm-corpora
+dataset: parlaclarin-corpus metadata word-frequencies tag-protocols speech-index tagged-speech-corpora text-corpora dtm-corpora
 
 config: $(CONFIG_FILENAME)
 	@echo "info: config file $(CONFIG_FILENAME) generated"
