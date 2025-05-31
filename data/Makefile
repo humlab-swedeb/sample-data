@@ -84,6 +84,27 @@ reset-corpus-folder:
 
 reset-metadata-folder:
 	@rm -rf metadata/$(METADATA_VERSION)
+	@perl -MCWB -e 'print $CWB::VERSION,"\n"'
+
+rsync-to-global:
+	@echo "info: syncing $(CORPUS_VERSION) /data/swedeb/$(CORPUS_VERSION)/"
+	@rsync -av --delete $(CORPUS_VERSION)/ /data/swedeb/$(CORPUS_VERSION)/
+	@rsync -av --delete metadata/$(METADATA_VERSION)/ /data/swedeb/metadata/$(METADATA_VERSION)/
+	@rsync -av --delete $(METADATA_FILENAME) /data/swedeb/$(METADATA_FILENAME)
+
+tools:
+	@echo "info: install CWB Core:"
+	@echo " wget -O cwb-3.5.0-src.tar.gz https://master.dl.sourceforge.net/project/cwb/cwb/cwb-3.5/source/cwb-3.5.0-src.tar.gz?viasf=1" 
+	@echo " tar xvf cwb-3.5.0-src.tar.gz"
+	@echo " cd cwb-3.5.0-src"
+	@echo " sudo ./install-scripts/install-linux"
+	@echo "info: install CWB/Perl toolkit:"
+	@echo " curl -L https://cpanmin.us | perl - --sudo App::cpanminus' to install cpanminus"
+	@echo " sudo cpan install CWB"
+
+####################################################################################################
+# Generate config file
+####################################################################################################
 
 $(CONFIG_FILENAME): .env
 	@make-config \
