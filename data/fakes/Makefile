@@ -8,4 +8,4 @@ PARLACLARIN_MODE=protocols
 METADATA_MODE=create
 TAGGING_MODE=tag
 WORD_FREQUENCY_MODE=create
-CWB_REGISTRY_FOLDER=$(shell pwd)/registry
+CWB_REGISTRY_FOLDER=$(shell pwd)/$(CORPUS_VERSION)/registry

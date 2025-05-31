@@ -81,7 +81,7 @@ vrt-data:
 		--structural-tag speech \
 		--batch-tag year
 
-CWB_REGISTRY_FOLDER=/usr/local/share/cwb/registry
+CWB_REGISTRY_FOLDER=$(shell pwd)/$(CORPUS_VERSION)/registry
 CWB_TARGET_FOLDER=`pwd`/$(SWEDEB_TAG)/cwb
 CWB_REGISTRY_ENTRY := riksprot_$(subst .,,$(SWEDEB_TAG))_test
 CWB_CORPUS_NAME := $(shell X="${CWB_REGISTRY_ENTRY}"; echo $${X^^})
