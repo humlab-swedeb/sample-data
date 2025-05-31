@@ -26,7 +26,7 @@ PROJECT_NAME :=  $(shell basename $(dir $(abspath $(word $(words $(MAKEFILE_LIST
 endif
 
 ifndef CWB_REGISTRY_FOLDER
-CWB_REGISTRY_FOLDER=/usr/local/share/cwb/registry
+CWB_REGISTRY_FOLDER := $(shell pwd)/$(CORPUS_VERSION)/registry
 endif
 
 ifndef CWB_REGISTRY_ENTRY
