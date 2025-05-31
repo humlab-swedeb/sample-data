@@ -257,11 +257,20 @@ tag-protocols:
 		exit 64 ; \
 	 fi
 
+
+###################################################################################################
+# Generate tagged speech corpus
+###################################################################################################
+BUILD_TYPE=sequential
+
+ifeq ($(BUILD_TYPE), sequential)
+
 tagged-speech-corpora: ./opts/tagged-speeches/*.yml
 	@echo "info: generating tagged speeches corpora..."
 	@echo "info:    script: pyriksprot.scripts.riksprot2speech:main"
 	@echo "info:    source: $(CORPUS_VERSION)/riksdagen-records"
-	@rm -rf $(CORPUS_VERSION)/speeches && mkdir -p $(CORPUS_VERSION)/speeches
+	@echo "skipped: rm -rf $(CORPUS_VERSION)/speeches"
+	@mkdir -p $(CORPUS_VERSION)/speeches
 	@for file in $^ ; do \
 		echo "info:     target: $(CORPUS_VERSION)/speeches/$$(basename $${file%.yml})" ; \
 		echo "info:    options: $${file}" ; \
@@ -271,6 +280,45 @@ tagged-speech-corpora: ./opts/tagged-speeches/*.yml
 				metadata/riksprot_metadata.${METADATA_VERSION}.db \
 					$(CORPUS_VERSION)/speeches/$$(basename $${file%.yml}) ; \
 	done
+
+else
+
+YAML_CONFIGS := $(wildcard ./opts/tagged-speeches/*.yml)
+TARGET_SPEECH_DIRS := $(patsubst ./opts/tagged-speeches/%.yml,$(CORPUS_VERSION)/speeches/%,$(YAML_CONFIGS))
+SPEECHES_BASE_DIR := $(CORPUS_VERSION)/speeches
+
+.PHONY: tagged-speech-corpora clean-speeches setup-speeches-dir
+
+tagged-speech-corpora: setup-speeches-dir $(TARGET_SPEECH_DIRS)
+	@echo "info: generating tagged speeches corpora..."
+	@echo "info:    script: pyriksprot.scripts.riksprot2speech:main"
+	@echo "info:    source: $(CORPUS_VERSION)/riksdagen-records"
+	@echo "info: all tagged speech corpora successfully generated in $(SPEECHES_BASE_DIR)."
+
+setup-speeches-dir:
+	@echo "info: preparing base directory for speeches: $(SPEECHES_BASE_DIR)"
+	@rm -rf $(SPEECHES_BASE_DIR)
+	@mkdir -p $(SPEECHES_BASE_DIR)
+
+$(SPEECHES_BASE_DIR)/%: ./opts/tagged-speeches/%.yml | setup-speeches-dir
+	@echo "info:   generating corpus for $@"
+	@echo "info:      options: $<"
+	@mkdir -p $@
+	@riksprot2speech \
+		--options-filename $< --force \
+		$(CORPUS_VERSION)/tagged_frames \
+		metadata/riksprot_metadata.${METADATA_VERSION}.db \
+		$@  # This is the output directory for this specific corpus
+
+clean-speeches:
+	@echo "info: cleaning $(SPEECHES_BASE_DIR)..."
+	@rm -rf $(SPEECHES_BASE_DIR)
+
+endif
+
+###################################################################################################
+# Generate text speech corpora
+###################################################################################################
 
 text-corpora: ./opts/plain-text-speeches/*.yml
 	@echo "info: generating text speech corpora..."
