@@ -361,7 +361,7 @@ cwb-data:
 		-R $(CWB_REGISTRY_FOLDER)/$(CWB_REGISTRY_ENTRY) \
 		-P lemma -P pos -P xpos \
 		-S year:0+year+title \
-		-S protocol:0+title+date \
+		-S protocol:0+title+date+chamber \
 		-S speech:0+id+title+who+date+party_id+gender_id+office_type_id+sub_office_type_id+name+page_number
 	@if [ "$(cwb-make-exists)" == "true" ]; then \
 		cwb-make -V $(CWB_CORPUS_NAME); \
