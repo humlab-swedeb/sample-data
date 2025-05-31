@@ -1,9 +1,9 @@
 root_folder: /data/riksdagen_corpus_data
 data_folder: /data/riksdagen_corpus_data
-version: v1.1.0
+version: v1.4.1
 
 corpus:
-  version: v1.1.0
+  version: v1.4.1
   folder: /data/riksdagen_corpus_data/riksdagen-records/data
   pattern: "**/prot-*-*.xml"
   github:
@@ -11,30 +11,33 @@ corpus:
     repository: riksdagen-records
     path: data
     local_folder: /data/riksdagen_corpus_data/riksdagen-records
+    url: https://github.com/swerik-project/riksdagen-records.git
 
 metadata:
-  version: v1.1.0
-  folder: /data/riksdagen_corpus_data/metadata/v1.1.0
+  version: v1.4.1
+  folder: /data/riksdagen_corpus_data/metadata/v1.4.1
   database:
     type: pyriksprot.metadata.database.SqliteDatabase
     options:
-      filename: /data/riksdagen_corpus_data/metadata/riksprot_metadata.v1.1.0.db
+      filename: /data/riksdagen_corpus_data/metadata/riksprot_metadata.v1.4.1.db
   github:
     user: swerik-project
     repository: riksdagen-persons
     path: data
+    local_folder: /data/riksdagen_corpus_data/riksdagen-persons
+    url: https://github.com/swerik-project/riksdagen-persons.git
 
 tagged_frames:
-  folder: /data/riksdagen_corpus_data/v1.1.0/tagged_frames
-  file_pattern: prot-*.zip
-  pattern: /data/riksdagen_corpus_data/v1.1.0/tagged_frames/**/prot-*.zip
+  folder: /data/riksdagen_corpus_data/v1.4.1/tagged_frames
+  file_pattern: "prot-*.zip"
+  pattern: /data/riksdagen_corpus_data/v1.4.1/tagged_frames/**/prot-*.zip
 
 tagged_speeches:
-  folder: /data/riksdagen_corpus_data/v1.1.0/tagged_frames_speeches.feather
+  folder: /data/riksdagen_corpus_data/v1.4.1/tagged_frames_speeches.feather
 
 dehyphen:
-  folder: /data/riksdagen_corpus_data/v1.1.0/dehyphen
-  tf_filename: /data/riksdagen_corpus_data/v1.1.0/dehyphen/word-frequencies.pkl
+  folder: /data/riksdagen_corpus_data/v1.4.1/dehyphen
+  tf_filename: /data/riksdagen_corpus_data/v1.4.1/dehyphen/word-frequencies.pkl
 
 tagger:
   module: pyriksprot_tagger.taggers.stanza_tagger
