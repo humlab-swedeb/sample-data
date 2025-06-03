@@ -1,4 +1,3 @@
-document_name
 prot-1970--ak--029.xml
 prot-1971--117.xml
 prot-1972--021.xml

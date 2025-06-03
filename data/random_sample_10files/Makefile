@@ -6,9 +6,9 @@ SHELL := /bin/bash
 DATA_FOLDER=.
 PARLACLARIN_MODE=protocols
 METADATA_MODE=create
-TAGGING_MODE=tag
+TAGGING_MODE=subset
 WORD_FREQUENCY_MODE=create
-GLOBAL_FOLDER=/data/riksdagen_corpus_data
+GLOBAL_FOLDER=/data/swedeb
 GLOBAL_CORPUS_FOLDER=$(GLOBAL_FOLDER)/riksdagen-records/data
 
 ifndef CORPUS_VERSION
