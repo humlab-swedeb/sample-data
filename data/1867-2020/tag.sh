@@ -1,0 +1,1 @@
+/home/roger/source/welfare-state-analytics/pyriksprot_tagger/pyriksprot_tagger/scripts/tag.sh
