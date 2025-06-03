@@ -111,12 +111,13 @@ $(CONFIG_FILENAME): .env
 		--corpus-folder $(CORPUS_FOLDER) \
 		--stanza-datadir /data/sparv/models/stanza $(CONFIG_FILENAME)
 
+
 ####################################################################################################
 # Generate parlaclarin corpus
 ####################################################################################################
 
 .PHONY: parlaclarin-corpus reset-corpus-folder
-parlaclarin-corpus: reset-corpus-folder
+parlaclarin-corpus: config reset-corpus-folder
 	@echo "info: generating parlaclarin & metadata..."
 	@echo "info:    target: $(CORPUS_FOLDER)"
 	@echo "info:    script: pyriksprot.scripts.subset-corpus:main"
@@ -165,7 +166,7 @@ metadata: reset-metadata-folder $(CONFIG_FILENAME)
 		\
 		echo "info: generating $(METADATA_FILENAME) using source metadata/$(METADATA_VERSION)" ; \
 		rm -f $(METADATA_FILENAME) ; \
-		metadata2db  database  \
+		metadata2db database  \
 			--target-filename=$(METADATA_FILENAME) \
 			--force \
 			--source-folder=metadata/$(METADATA_VERSION) \
@@ -410,15 +411,20 @@ cwb-data:
 		-S protocol:0+title+date+chamber \
 		-S speech:0+id+title+who+date+party_id+gender_id+office_type_id+sub_office_type_id+name+page_number
 	@if [ "$(cwb-make-exists)" == "true" ]; then \
-		cwb-make -V $(CWB_CORPUS_NAME); \
+		cwb-make -r $(CWB_REGISTRY_FOLDER) -V $(CWB_CORPUS_NAME); \
 	else \
 		echo "info: cwb-make not found, skipping corpus creation"; \
 		echo "info: run 'sudo cpan install CWB' to install the CWB/Perl toolkit" ; \
 	fi
+
 	@cwb-describe-corpus -r $(CWB_REGISTRY_FOLDER) $(CWB_CORPUS_NAME)
 	@cp ../resources/riksprot_corpus $(CWB_REGISTRY_FOLDER)/riksprot_corpus
 	@echo "info: CWB corpus $(CWB_CORPUS_NAME) created in $(CWB_TARGET_FOLDER)"
 	@echo "info: Stored registry entry $(CWB_REGISTRY_ENTRY) in $(CWB_REGISTRY_FOLDER)"
+
+describe-corpus:
+	@echo "info: describing CWB corpus $(CWB_CORPUS_NAME)"
+	@cwb-describe-corpus -r $(CWB_REGISTRY_FOLDER) $(CWB_CORPUS_NAME)
 
 generic-cwb-registry-entry:
 	@sed -E -e "s/^(ID[[:space:]]*)$(CWB_REGISTRY_ENTRY)$$/\\1riksprot_corpus/"  \
