@@ -10,6 +10,15 @@ SHELL := /bin/bash
 
 include $(shell pwd)/.env
 
+PYRIKSPROT_FOLDER=/home/roger/source/welfare-state-analytics/pyriksprot
+PENELOPE_FOLDER=/home/roger/source/penelope
+
+
+# Leave these blank if tools are installed in the current environment
+PENELOPE_RUN=poetry -P $(PENELOPE_FOLDER) run
+#PYRIKSPROT_RUN=poetry -C $(PYRIKSPROT_FOLDER) run
+PYRIKSPROT_RUN=
+
 GLOBAL_FOLDER=/data/riksdagen_corpus_data
 GLOBAL_CORPUS_FOLDER=$(GLOBAL_FOLDER)/riksdagen-records
 
@@ -133,7 +142,7 @@ parlaclarin-corpus: config reset-corpus-folder
 	elif [ "$(PARLACLARIN_MODE)" == "protocols" ] ; then \
 		../../bin/cp-protocols --config-filename $(CONFIG_FILENAME) --protocols ./protocols.txt ; \
 	elif [ "$(PARLACLARIN_MODE)" == "subset" ] ; then \
-		subset-corpus $(CONFIG_FILENAME) ./protocols.txt . --skip-download ; \
+		$(PYRIKSPROT_RUN) subset-corpus $(CONFIG_FILENAME) ./protocols.txt . --skip-download ; \
 	elif [ "$(PARLACLARIN_MODE)" == "skip" ] ; then \
 		echo "info: skipping protocols update..." ; \
 	else \
@@ -183,7 +192,7 @@ metadata: reset-metadata-folder $(CONFIG_FILENAME)
 
 metadata-refresh:
 	@echo "info: creating new metadata db using existing data (no download, no index update)"
-	@metadata2db database \
+	@$(PYRIKSPROT_RUN) metadata2db database \
 		--target-filename=$(METADATA_FILENAME) \
 		--skip-create-index \
 		--skip-download-metadata \
@@ -200,7 +209,7 @@ speech-index:
 	@echo "info:    script: pyriksprot.scripts.riksprot2speech_index:main"
 	@echo "info:    source: $(CORPUS_VERSION)/tagged_frames"
 	@echo "info:    target: $(CORPUS_VERSION)/speech-index.csv.gz (and .feather)"
-	@speech-index $(CORPUS_VERSION)/tagged_frames \
+	@$(PYRIKSPROT_RUN) speech-index $(CORPUS_VERSION)/tagged_frames \
 		$(CORPUS_VERSION)/speech-index.csv.gz \
 		$(METADATA_FILENAME) \
 		--multiproc-processes 4
@@ -220,7 +229,7 @@ word-frequencies:
 		cp -r $(GLOBAL_FOLDER)/$(CORPUS_VERSION)/dehyphen/word-frequencies.pkl $(CORPUS_VERSION)/dehyphen/word-frequencies.pkl ; \
 	elif [ "$(WORD_FREQUENCY_MODE)" == "create" ] ; then \
 		echo "skipping: subset-corpus $(CONFIG_FILENAME) ./protocols.txt . --skip-download" ; \
-		riksprot2tfs $(CORPUS_VERSION)/riksdagen-records $(CORPUS_VERSION)/dehyphen/word-frequencies.pkl ; \
+		$(PYRIKSPROT_RUN) riksprot2tfs $(CORPUS_VERSION)/riksdagen-records $(CORPUS_VERSION)/dehyphen/word-frequencies.pkl ; \
 	elif [ "$(WORD_FREQUENCY_MODE)" == "skip" ] ; then \
 		echo "info: skipping word frequency generation " ; \
 	else \
@@ -245,11 +254,11 @@ tag-protocols:
 		rm -rf $(CORPUS_VERSION)/tagged_frames ; \
 		cp -r $(GLOBAL_FOLDER)/$(CORPUS_VERSION)/tagged_frames $(CORPUS_VERSION)/tagged_frames ; \
 	 elif [ "$(TAGGING_MODE)" == "subset" ] ; then \
-		subset-vrt-corpus $(GLOBAL_FOLDER)/$(CORPUS_VERSION)/tagged_frames \
+		$(PYRIKSPROT_RUN) subset-vrt-corpus $(GLOBAL_FOLDER)/$(CORPUS_VERSION)/tagged_frames \
 			$(CORPUS_VERSION)/riksdagen-records $(CORPUS_VERSION)/tagged_frames ; \
 	 elif [ "$(TAGGING_MODE)" == "tag" ] ; then \
 		rm -rf $(CORPUS_VERSION)/tagged_frames ; \
-		pos_tag --skip-version-check $(CONFIG_FILENAME) $(CORPUS_VERSION)/riksdagen-records $(CORPUS_VERSION)/tagged_frames ; \
+		$(PYRIKSPROT_RUN) pos_tag --skip-version-check $(CONFIG_FILENAME) $(CORPUS_VERSION)/riksdagen-records $(CORPUS_VERSION)/tagged_frames ; \
 	 else \
 		echo "error: unknown tagging mode $(TAGGING_MODE) " ; \
 		exit 64 ; \
@@ -272,7 +281,7 @@ tagged-speech-corpora: ./opts/tagged-speeches/*.yml
 	@for file in $^ ; do \
 		echo "info:     target: $(CORPUS_VERSION)/speeches/$$(basename $${file%.yml})" ; \
 		echo "info:    options: $${file}" ; \
-		riksprot2speech \
+		$(PYRIKSPROT_RUN) riksprot2speech \
 			--options-filename $${file} --force \
 			$(CORPUS_VERSION)/tagged_frames \
 				metadata/riksprot_metadata.${METADATA_VERSION}.db \
@@ -302,7 +311,7 @@ $(SPEECHES_BASE_DIR)/%: ./opts/tagged-speeches/%.yml | setup-speeches-dir
 	@echo "info:   generating corpus for $@"
 	@echo "info:      options: $<"
 	@mkdir -p $@
-	@riksprot2speech \
+	@$(PYRIKSPROT_RUN) riksprot2speech \
 		--options-filename $< --force \
 		$(CORPUS_VERSION)/tagged_frames \
 		metadata/riksprot_metadata.${METADATA_VERSION}.db \
@@ -326,7 +335,7 @@ text-corpora: ./opts/plain-text-speeches/*.yml
 	@for file in $^ ; do \
 		echo "info:    target: $(CORPUS_VERSION)/speeches/$$(basename $${file%.yml})" ; \
 		echo "info:   options: $${file}" ; \
-		riksprot2speech_text \
+		$(PYRIKSPROT_RUN) riksprot2speech_text \
 			--options-filename $${file} --force \
 			$(CORPUS_VERSION)/riksdagen-records \
 				metadata/riksprot_metadata.${METADATA_VERSION}.db \
@@ -348,7 +357,7 @@ dtm-corpora: ./opts/dtm/*.yml
 		echo "info:    target: $(CORPUS_VERSION)/dtm/$${tag}" ; \
 		echo "info:   options: $${file}" ; \
 		rm -rf $(CORPUS_VERSION)/dtm/$${tag} ; \
-		vectorize-id \
+		$(PENELOPE_RUN) vectorize-id \
 		    --create-subfolder \
 			--options-filename $${file} \
 			--corpus-source $(CORPUS_VERSION)/speeches/tagged_frames_speeches_$${tag}.feather \
@@ -375,7 +384,7 @@ vrt-data: check-riksprot2vrt
 	@echo "info:    source: $(CORPUS_VERSION)/tagged_frames"
 	@echo "info:    target: $(CORPUS_VERSION)/vrt"
 	@rm -rf $(CORPUS_VERSION)/vrt && mkdir -p $(CORPUS_VERSION)/vrt
-	@riksprot2vrt \
+	@$(PYRIKSPROT_RUN) riksprot2vrt \
 		--source-folder $(CORPUS_VERSION)/tagged_frames \
 		--target-folder $(CORPUS_VERSION)/vrt \
 		--metadata-filename metadata/riksprot_metadata.${METADATA_VERSION}.db \
@@ -499,4 +508,3 @@ metadata-database-vacuum:
 metadata-dump-schema:
 	@echo -e ".output riksprot_metadata_testdata_$(METADATA_VERSION).sql\n.dump\n.exit" | sqlite3 $(METADATA_FILENAME)
 	@echo -e ".output riksprot_metadata_testdata_schema_$(METADATA_VERSION).sql\n.schema\n.exit" | sqlite3 $(METADATA_FILENAME)
-
