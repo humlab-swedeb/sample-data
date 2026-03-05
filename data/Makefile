@@ -323,6 +323,40 @@ clean-speeches:
 
 endif
 
+###########
+# ALT USING STAMPS
+###########
+# YAML_CONFIGS := $(wildcard ./opts/tagged-speeches/*.yml)
+# SPEECHES_BASE_DIR := $(CORPUS_VERSION)/speeches
+# STAMP_FILES := $(patsubst ./opts/tagged-speeches/%.yml,$(SPEECHES_BASE_DIR)/%/.stamp,$(YAML_CONFIGS))
+
+# .PHONY: tagged-speech-corpora clean-speeches
+
+# tagged-speech-corpora: $(STAMP_FILES)
+# 	@echo "info: generating tagged speeches corpora..."
+# 	@echo "info:    script: pyriksprot.scripts.riksprot2speech:main"
+# 	@echo "info: all tagged speech corpora successfully generated in $(SPEECHES_BASE_DIR)."
+
+# # Only create base dir if missing (no rm)
+# $(SPEECHES_BASE_DIR):
+# 	@mkdir -p $@
+
+# # Build one corpus from one YAML config
+# $(SPEECHES_BASE_DIR)/%/.stamp: ./opts/tagged-speeches/%.yml metadata/riksprot_metadata.${METADATA_VERSION}.db | $(SPEECHES_BASE_DIR)
+# 	@echo "info:   generating corpus for $(SPEECHES_BASE_DIR)/$*"
+# 	@echo "info:      options: $<"
+# 	@mkdir -p $(SPEECHES_BASE_DIR)/$*
+# 	@$(PYRIKSPROT_RUN) riksprot2speech \
+# 		--options-filename $< --force \
+# 		$(CORPUS_VERSION)/tagged_frames \
+# 		metadata/riksprot_metadata.${METADATA_VERSION}.db \
+# 		$(SPEECHES_BASE_DIR)/$*
+# 	@touch $@
+
+# clean-speeches:
+# 	@echo "info: cleaning speeches directory: $(SPEECHES_BASE_DIR)"
+# 	@rm -rf $(SPEECHES_BASE_DIR)
+
 ###################################################################################################
 # Generate text speech corpora
 ###################################################################################################
