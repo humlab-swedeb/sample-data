@@ -346,6 +346,15 @@ text-corpora: ./opts/plain-text-speeches/*.yml
 # Generate DTM corpora
 ###################################################################################################
 
+check-vectorize-id:
+	@command -v vectorize-id >/dev/null 2>&1 || { \
+		echo "error: DTM corpora needs `vectorize-id` which is not available"; \
+		echo "info: install humlab-penelope[full] in the current environment" or activate existing environment; \
+		echo "info: see https://github.com/humlab/penelope" ; \
+		echo "info: python -m venv .venv && . .venv/bin/activate && pip install humlab-penelope[full]" ; \
+		exit 1; \
+	}
+
 dtm-corpora: ./opts/dtm/*.yml
 	@echo "info: generating DTM corpora..."
 	@echo "note: humlab-penelope (vectorize-id) must be installed in current environment"
