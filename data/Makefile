@@ -360,8 +360,16 @@ dtm-corpora: ./opts/dtm/*.yml
 # Generate VRT corpora
 ###################################################################################################
 
+check-riksprot2vrt:
+	@command -v riksprot2vrt >/dev/null 2>&1 || { \
+		echo "error: command riksprot2vrt is not available"; \
+		echo "info: install pyriksprot in the current environment or activate existing environment"; \
+		echo "info: python -m venv .venv && . .venv/bin/activate && pip install pyriksprot" ; \
+		exit 1; \
+	}
+
 .PHONY: vrt-data
-vrt-data:
+vrt-data: check-riksprot2vrt
 	@echo "info: generating CWB extended VRT corpora..."
 	@echo "info:    script: riksprot2vrt"
 	@echo "info:    source: $(CORPUS_VERSION)/tagged_frames"
