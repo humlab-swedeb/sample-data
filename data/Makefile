@@ -75,6 +75,8 @@ info:
 	@echo "info:    CWB target folder:       $(CWB_TARGET_FOLDER)"
 
 
+buggen: text-corpora dtm-corpora vrt-data cwb-data cwb-data-manual-compress
+
 all: dataset vrt-data cwb-data cwb-data-manual-compress
 
 dataset: parlaclarin-corpus metadata word-frequencies tag-protocols speech-index tagged-speech-corpora text-corpora dtm-corpora
