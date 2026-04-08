@@ -15,9 +15,9 @@ PENELOPE_FOLDER=/home/roger/source/penelope
 
 
 # Leave these blank if tools are installed in the current environment
-PENELOPE_RUN=poetry -P $(PENELOPE_FOLDER) run
-#PYRIKSPROT_RUN=poetry -C $(PYRIKSPROT_FOLDER) run
-PYRIKSPROT_RUN=
+PENELOPE_RUN=poetry --project $(PENELOPE_FOLDER) run
+PYRIKSPROT_RUN=poetry --project $(PYRIKSPROT_FOLDER) run
+#PYRIKSPROT_RUN=
 
 GLOBAL_FOLDER=/data/riksdagen_corpus_data
 GLOBAL_CORPUS_FOLDER=$(GLOBAL_FOLDER)/riksdagen-records
@@ -177,7 +177,7 @@ metadata: reset-metadata-folder $(CONFIG_FILENAME)
 		\
 		echo "info: generating $(METADATA_FILENAME) using source metadata/$(METADATA_VERSION)" ; \
 		rm -f $(METADATA_FILENAME) ; \
-		metadata2db database  \
+		$(PYRIKSPROT_RUN) metadata2db database  \
 			--target-filename=$(METADATA_FILENAME) \
 			--force \
 			--source-folder=metadata/$(METADATA_VERSION) \
@@ -255,6 +255,8 @@ tag-protocols:
 	 elif [ "$(TAGGING_MODE)" == "copy" ] ; then \
 		rm -rf $(CORPUS_VERSION)/tagged_frames ; \
 		cp -r $(GLOBAL_FOLDER)/$(CORPUS_VERSION)/tagged_frames $(CORPUS_VERSION)/tagged_frames ; \
+	 elif [ "$(TAGGING_MODE)" == "protocols" ] ; then \
+		../../bin/cp-protocols --config-filename $(CONFIG_FILENAME) --protocols ./protocols.txt --type vrt --source-folder /data/swedeb/$(CORPUS_VERSION)/tagged_frames ; \
 	 elif [ "$(TAGGING_MODE)" == "subset" ] ; then \
 		$(PYRIKSPROT_RUN) subset-vrt-corpus $(GLOBAL_FOLDER)/$(CORPUS_VERSION)/tagged_frames \
 			$(CORPUS_VERSION)/riksdagen-records $(CORPUS_VERSION)/tagged_frames ; \
@@ -415,7 +417,7 @@ dtm-corpora: ./opts/dtm/*.yml
 ###################################################################################################
 
 check-riksprot2vrt:
-	@command -v riksprot2vrt >/dev/null 2>&1 || { \
+	@command -v $(PYRIKSPROT_RUN) riksprot2vrt >/dev/null 2>&1 || { \
 		echo "error: command riksprot2vrt is not available"; \
 		echo "info: install pyriksprot in the current environment or activate existing environment"; \
 		echo "info: python -m venv .venv && . .venv/bin/activate && pip install pyriksprot" ; \
