@@ -6,6 +6,7 @@ g_source_folder=
 g_target_folder=
 g_input_file="./protocols.txt"
 g_config_filename=
+g_type=xml
 
 function usage() {
     if [[ $# -gt 0 ]]; then
@@ -37,19 +38,41 @@ while [[ $# -gt 0 ]]; do
       g_input_file="$2"
       shift 2
       ;;
+    --type|-t)
+      g_type="$2"
+      shift 2
+      ;;
+    --help|-h)
+      usage
+      ;;
     *)
       echo "Unknown option: $1" >&2
-      exit 1
+      usage
       ;;
   esac
 done
 
+if [[ "$g_type" != "xml" && "$g_type" != "vrt" ]]; then
+  usage "unsupported type: $g_type"
+fi
+
+if [[ "$g_type" == "vrt" && "$g_source_folder" == "" ]]; then
+  usage "VRT copy requires source folder to be specified"
+fi
+
 if [ -f "$g_config_filename" ]; then
   if [ "$g_source_folder" == "" ]; then
-     g_source_folder=$(yq '.global.corpus.folder' "$g_config_filename")
+    if [ "$g_type" == "xml" ]; then
+      g_source_folder=$(yq '.global.corpus.folder' "$g_config_filename")
+    fi
+    # No "global" repository for tagged frames, so we cannot set a default source folder for vrt files
   fi
   if [ "$g_target_folder" == "" ]; then
-     g_target_folder=$(yq '.corpus.folder' "$g_config_filename")
+    if [ "$g_type" == "xml" ]; then
+      g_target_folder=$(yq '.corpus.folder' "$g_config_filename")
+    elif [ "$g_type" == "vrt" ]; then
+      g_target_folder=$(yq '.tagged_frames.folder' "$g_config_filename")
+    fi
   fi
 fi
 
@@ -73,6 +96,10 @@ while IFS= read -r filename; do
     # skip lines starting with "#"
     [[ "$filename" =~ ^# ]] && continue
 
+    if [[ "$g_type" == "vrt" ]]; then
+        filename="${filename%.xml}.zip"  # replace .xml with .zip since the vrt files are zipped
+    fi
+
     # extract the digits after "prot-" and before the next "-"
     # e.g. "prot-1933--fk--5.xml" -> "1933"
     sub_folder=${filename#prot-}       # remove leading "prot-"
@@ -81,6 +108,11 @@ while IFS= read -r filename; do
     src="$g_source_folder/$sub_folder/$filename"
     dst_dir="$g_target_folder/$sub_folder"
 
+    if [[ ! -f "$src" ]]; then
+        echo "warning: source file not found: $src" >&2
+        continue
+    fi
+    
     rm -rf "$dst_dir"
     mkdir -p "$dst_dir"
     cp -f $src "$dst_dir/"   # no double qoutes allows use of wildcards in input file
