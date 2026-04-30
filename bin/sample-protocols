@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+INPUT="./metadata/v1.2.2/protocols.csv.gz"
+OUT="protocols.txt"
+
+YEARS_START=1970
+YEARS_END=1979
+N_PER_YEAR=3
+
+TMP=$(mktemp -d)
+trap 'rm -rf "$TMP"' EXIT
+
+# Decompress and extract relevant columns (assuming header exists)
+zcat "$INPUT" | awk -F'\t' '
+NR==1 {
+  for (i=1; i<=NF; i++) {
+    if ($i=="document_name") doc_col=i
+    if ($i=="year") year_col=i
+  }
+  next
+}
+{
+  print $doc_col "\t" $year_col
+}
+' > "$TMP/data.tsv"
+
+> "$OUT"
+
+for year in $(seq "$YEARS_START" "$YEARS_END"); do
+  awk -F'\t' -v y="$year" '$2 == y' "$TMP/data.tsv" > "$TMP/year.tsv"
+
+  count=$(wc -l < "$TMP/year.tsv")
+
+  if [ "$count" -eq 0 ]; then
+    continue
+  fi
+
+  if [ "$count" -lt "$N_PER_YEAR" ]; then
+    # sample with replacement
+    for i in $(seq 1 "$N_PER_YEAR"); do
+      shuf -n 1 "$TMP/year.tsv" | awk -F'\t' '{print $1 ".xml"}' >> "$OUT"
+    done
+  else
+    # sample without replacement
+    shuf -n "$N_PER_YEAR" "$TMP/year.tsv" | awk -F'\t' '{print $1 ".xml"}' >> "$OUT"
+  fi
+done
+
+echo "Wrote $(wc -l < "$OUT") entries to $OUT"
