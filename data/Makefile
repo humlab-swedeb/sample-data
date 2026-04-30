@@ -467,10 +467,12 @@ cwb-data:
 	@if [ ! -d "$(CWB_REGISTRY_FOLDER)" ] ; then \
 		mkdir -p $(CWB_REGISTRY_FOLDER) ; \
 	fi
+	@echo "info: encoding corpus with cwb-encode..."
+	@echo "note: xpos is excluded from indexing to reduce index size (can be re-enabled adding -P xpos)"
 	@cwb-encode -d $(CWB_TARGET_FOLDER) -sxBC9 -c utf8 \
 		-F `pwd`/$(CORPUS_VERSION)/vrt \
 		-R $(CWB_REGISTRY_FOLDER)/$(CWB_REGISTRY_ENTRY) \
-		-P lemma -P pos -P xpos \
+		-P lemma -P pos \
 		-S year:0+year+title \
 		-S protocol:0+title+date+chamber \
 		-S speech:0+id+title+who+date+party_id+gender_id+office_type_id+sub_office_type_id+name+page_number
