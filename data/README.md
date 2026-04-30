@@ -179,7 +179,7 @@ make all         # Generate complete dataset with CWB corpus
 ### Large Dataset from Global
 ```bash
 # .env with PARLACLARIN_MODE=copy, METADATA_MODE=copy, etc.
-make dataset     # Copy and process from /data/riksdagen_corpus_data
+make dataset     # Copy and process from GLOBAL_CORPUS_FOLDER
 make vrt-data    # Generate VRT
 make cwb-data    # Create CWB corpus
 ```
@@ -196,7 +196,7 @@ make speech-index
 
 ## Notes
 
-- **Global folder**: `/data/riksdagen_corpus_data` contains pre-generated data
+- **Global folder**: `GLOBAL_CORPUS_FOLDER` contains riksdagen-records
 - **Parallel builds**: Set `BUILD_TYPE=sequential` or `BUILD_TYPE=parallel` for speech corpora
 - **Config generation**: `make-config` utility generates YAML from .env + defaults
 - **Speech index**: Used by Swedeb API for fast lookups (Feather format preferred)
