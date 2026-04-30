@@ -12,7 +12,7 @@ dataset: parlaclarin-corpus word-frequencies tag-protocols tagged-speech-corpora
 parlaclarin-corpus:
 	@echo "Target(s): subset of Parla-CLARIN corpus and processed metadata"
 	@echo "Script(s): pyriksprot.scripts.subset-corpus:main"
-	@subset-corpus ./protocols.txt ./ $(SWEDEB_TAG) --source-folder /data/riksdagen_corpus_data/riksdagen-corpus
+	@subset-corpus ./protocols.txt ./ $(SWEDEB_TAG) --source-folder /data/swerik/riksdagen-corpus
 
 word-frequencies:
 	@echo "Target(s): global term frequencies (TF)"
@@ -24,7 +24,7 @@ tag-protocols:
 	@echo "Target(s): tagged parlaclarin protocols (tagged frames)"
 	@echo "Script(s): pyriksprot_tagger.scripts.tag:main"
 ifeq ($(PREFERE_COPY),yes)
-	@subset-vrt-corpus /data/riksdagen_corpus_data/$(SWEDEB_TAG)/corpus/tagged_frames $(SWEDEB_TAG)/parlaclarin/protocols $(SWEDEB_TAG)/tagged_frames
+	@subset-vrt-corpus /data/swerik/$(SWEDEB_TAG)/corpus/tagged_frames $(SWEDEB_TAG)/parlaclarin/protocols $(SWEDEB_TAG)/tagged_frames
 else
 	@pos_tag opts/tagger-config.yml $(SWEDEB_TAG)/parlaclarin/protocols $(SWEDEB_TAG)/tagged_frames
 endif
