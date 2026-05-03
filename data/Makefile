@@ -10,20 +10,17 @@ SHELL := /bin/bash
 
 include $(shell pwd)/.env
 
-PYRIKSPROT_FOLDER=/home/roger/source/welfare-state-analytics/pyriksprot
-PENELOPE_FOLDER=/home/roger/source/penelope
-
-
 # Leave these blank if tools are installed in the current environment
 PENELOPE_RUN=poetry --project $(PENELOPE_FOLDER) run
 PYRIKSPROT_RUN=poetry --project $(PYRIKSPROT_FOLDER) run
 #PYRIKSPROT_RUN=
 
-GLOBAL_FOLDER=/data/riksdagen_corpus_data
-GLOBAL_CORPUS_FOLDER=$(GLOBAL_FOLDER)/riksdagen-records
+ifndef GLOBAL_FOLDER
+$(error environment variable GLOBAL_FOLDER must be defined in .env)
+endif
 
-ifndef CORPUS_VERSION
-$(error environment variable CORPUS_VERSION must be defined in .env)
+ifndef GLOBAL_CORPUS_FOLDER
+$(error environment variable GLOBAL_CORPUS_FOLDER must be defined in .env)
 endif
 
 ifndef METADATA_VERSION
@@ -115,7 +112,7 @@ tools:
 ####################################################################################################
 
 $(CONFIG_FILENAME): .env
-	@make-config \
+	@$(PYRIKSPROT_RUN) make-config \
 		--corpus-version $(CORPUS_VERSION) \
 		--metadata-version $(METADATA_VERSION) \
 		--root-folder . \
