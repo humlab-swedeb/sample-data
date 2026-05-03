@@ -10,7 +10,7 @@ corpus:
     user: swerik-project
     repository: riksdagen-records
     path: data
-    local_folder: /data/riksdagen_corpus_data/riksdagen-records/
+    local_folder: /data/swerik/riksdagen-records/
     url: https://github.com/swerik-project/riksdagen-records.git
 
 metadata:
@@ -24,7 +24,7 @@ metadata:
     user: swerik-project
     repository: riksdagen-persons
     path: data
-    local_folder: /data/riksdagen_corpus_data/riksdagen-persons/
+    local_folder: /data/swerik/riksdagen-persons/
     url: https://github.com/swerik-project/riksdagen-persons.git
 
 tagged_frames:
@@ -52,6 +52,6 @@ tagger:
 
 global:
   corpus:
-    folder: /data/riksdagen_corpus_data/riksdagen-records/data
+    folder: /data/swerik/riksdagen-records/data
   metadata:
-    folder: /data/riksdagen_corpus_data/riksdagen-persons/data
+    folder: /data/swerik/riksdagen-persons/data
