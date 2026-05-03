@@ -4,13 +4,13 @@ version: v1.6.0
 
 corpus:
   version: v1.6.0
-  folder: v1.6.0/parlaclarin/protocols
+  folder: v1.6.0/riksdagen-records
   pattern: "**/prot-*-*.xml"
   github:
     user: swerik-project
     repository: riksdagen-records
     path: data
-    local_folder: /data/swerik/riksdagen-records
+    local_folder: /data/swerik/riksdagen-records/
     url: https://github.com/swerik-project/riksdagen-records.git
 
 metadata:
@@ -19,7 +19,7 @@ metadata:
   database:
     type: pyriksprot.metadata.database.SqliteDatabase
     options:
-      filename: metadata/riksprot_metadata.v1.2.2.db
+      filename: ./metadata/riksprot_metadata.v1.2.2.db
   github:
     user: swerik-project
     repository: riksdagen-persons
@@ -28,16 +28,16 @@ metadata:
     url: https://github.com/swerik-project/riksdagen-persons.git
 
 tagged_frames:
-  folder: v1.6.0/tagged_frames
-  file_pattern: prot-*.zip
-  pattern: v1.6.0/tagged_frames/**/prot-*.zip
+  folder: ./v1.6.0/tagged_frames/
+  file_pattern: "prot-*.zip"
+  pattern: ./v1.6.0/tagged_frames/**/prot-*.zip
 
 tagged_speeches:
-  folder: v1.6.0/tagged_frames_speeches.feather
+  folder: ./v1.6.0/tagged_frames_speeches.feather
 
 dehyphen:
-  folder: v1.6.0/dehyphen
-  tf_filename: v1.6.0/dehyphen/word-frequencies.pkl
+  folder: ./v1.6.0/dehyphen
+  tf_filename: ./v1.6.0/dehyphen/word-frequencies.pkl
 
 tagger:
   module: pyriksprot_tagger.taggers.stanza_tagger
@@ -55,3 +55,7 @@ global:
     folder: /data/swerik/riksdagen-records/data
   metadata:
     folder: /data/swerik/riksdagen-persons/data
+  tagged_frames:
+    folder: ./v1.6.0/tagged_frames/
+    file_pattern: "prot-*.zip"
+    pattern: ./v1.6.0/tagged_frames/**/prot-*.zip
